@@ -13,8 +13,8 @@ module Deadlink
       files.each do |file|
         File.open(file) do |f|
           f.each_with_index do |line, index|
-            line.scan /[^!]\[[^\]]+\]\(([^)]+)\)/ do |link|
-              paths.push Path.new(f.path, link, index + 1)
+            line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
+              paths.push Path.new(f.path, link[0], index + 1)
             end
           end
         end
