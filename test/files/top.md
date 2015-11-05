@@ -1,0 +1,8 @@
+1. [dir_link1](dir1)
+2. [dir_link1_nest_file1.md](dir1/nest_file1.md)
+3. [dir_link1_nest_nothing_file2.md](dir1/nothing_nest_file2.md)
+4. [dir_link2](dir2)
+5. [dir_dead_link](nothing_dir)
+6. [file_link1](file1.md)
+7. [file_link2](file2.md)
+8. [file_dead_link](nothing.txt)

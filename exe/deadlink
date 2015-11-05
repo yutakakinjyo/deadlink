@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'deadlink'
+
+target_dir = ARGV[0].nil? ? '.' : ARGV[0]
+Deadlink.scan(target_dir)
