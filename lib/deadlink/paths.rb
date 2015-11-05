@@ -2,18 +2,19 @@ module Deadlink
   class Paths
     def initialize(paths)
       @paths = paths
+      @deadlinks = paths.select { |path| path.deadlink? }
     end
 
     def deadlink_include?
-      @paths.each do |path|
-        return true if path.deadlink?
-      end
-      false
+      @deadlinks.any?
+    end
+
+    def deadlinks
+      @deadlinks
     end
 
     def print_deadlinks
       @paths.each { |path| path.deadlink }
-      
     end
 
     def count
