@@ -11,10 +11,14 @@ module Deadlink
     end
 
     def deadlink?
-      !File.exist?(link_path) && !Dir.exist?(link_path) && !url?
+      !exist? && !url?
     end
 
     private
+
+    def exist?
+      File.exist?(link_path) || Dir.exist?(link_path)
+    end
 
     def url?
       @link =~ /https?:\/\/[\S]+/
