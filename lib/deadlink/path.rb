@@ -11,17 +11,28 @@ module Deadlink
     end
 
     def deadlink?
-      !File.exist?(link_path) && !Dir.exist?(link_path) && !url?
+      !exist? && ignore 
     end
 
     private
+    
+    def exist?
+      File.exist?(link_path) || Dir.exist?(link_path)
+    end
+
+    def ignore
+      !url?
+    end
 
     def url?
       @link =~ /https?:\/\/[\S]+/
     end
 
     def link_path
-      File.expand_path(@link, File.dirname(@file_path))
+      # split path ; <filename>#<title>
+      r = @link.match(/(?<filelink>[^#]*)#*(?<anchor>.*)/)
+      File.expand_path(r[:filelink], File.dirname(@file_path))
     end
+
   end
 end

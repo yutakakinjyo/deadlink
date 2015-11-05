@@ -12,7 +12,7 @@ class DeadlinkTest < Minitest::Test
 
   def test_get_md_files
     files = @scanner.md_files
-    assert_equal 8, files.count
+    assert_equal 10, files.count
     assert files.include?(@target_dir + '/file1.md')
     assert files.include?(@target_dir + '/file2.md')
     assert files.include?(@target_dir + '/top.md')
@@ -34,7 +34,7 @@ class DeadlinkTest < Minitest::Test
   def test_get_paths
     files = @scanner.md_files
     paths = @scanner.paths(files)
-    assert_equal 12, paths.count
+    assert_equal 14, paths.count
   end
 
   def test_check_deadlinks
