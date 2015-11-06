@@ -35,7 +35,7 @@ nothing_dir in ./test/files/top.md line: 5
 nothing.txt in ./test/files/top.md line: 8
 ```
 
-## not check
+## not check patterns
 
 this gem not check following patterns yet. applying these patterns to gem is future task.
 
@@ -43,6 +43,7 @@ this gem not check following patterns yet. applying these patterns to gem is fut
 - anchor link ( only check file path part )
   - e.g. `[anhor link](example.md#title1)` => check example.md 
 - multibyte characters
+- specify file.
 
 ## Installation
 
