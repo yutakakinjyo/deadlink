@@ -60,7 +60,7 @@ $ deadlink <dir>
 if your not specify <dir> path, `.` path is specfied. 
 
 ```
-$ deadlink .
+$ deadlink => $ deadlink .
 ```
 
 
