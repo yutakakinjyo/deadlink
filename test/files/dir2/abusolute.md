@@ -1,0 +1,1 @@
+- [abusolute link](/deadlink/test/files/dir2/abusolute.md)
