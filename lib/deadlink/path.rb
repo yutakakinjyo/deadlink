@@ -32,7 +32,7 @@ module Deadlink
       # split path ; <filename>#<title>
       cap = @link.match(/(?<filelink>[^#]*)#*(?<anchor>.*)/)
       if cap[:filelink][0] == "/"
-        return File.join(File.expand_path("../", repo_root), cap[:filelink])
+        return File.join(repo_root, cap[:filelink])
       end
 
       File.expand_path(cap[:filelink], File.dirname(@file_path))
