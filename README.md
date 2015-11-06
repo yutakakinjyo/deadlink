@@ -1,28 +1,68 @@
 # Deadlink
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/deadlink`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Build Status](https://travis-ci.org/yutakakinjyo/deadlink.svg?branch=master)](https://travis-ci.org/yutakakinjyo/deadlink)
 
-TODO: Delete this and the text above, and describe your gem
+Check **deadlink** of markdown files in your git repository.
+
+**Example**
+
+`$ ls`
+
+`git_repo`
+
+`$ deadlink git_repo`
+
+show deadlink info.
+
+`<deadlink> in <md file path> line: <line number>`
+
+case of this repository
+
+```
+$ git clone git@github.com:yutakakinjyo/deadlink.git
+$ cd deadlink
+$ deadlink
+```
+
+result is this
+
+```
+example.md#title1 in ./README.md line: 43
+contributor-covenant.org in ./README.md line: 73
+nothing_file3.md in ./test/files/dir1/nest_file1.md line: 2
+dir1/nothing_nest_file2.md in ./test/files/top.md line: 3
+nothing_dir in ./test/files/top.md line: 5
+nothing.txt in ./test/files/top.md line: 8
+```
+
+## not check patterns
+
+this gem not check following patterns yet. applying these patterns to gem is future task.
+
+- http(s) link
+- anchor link ( only check file path part )
+  - e.g. `[anhor link](example.md#title1)` => check example.md 
+- multibyte characters
+- specify file.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'deadlink'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install deadlink
+`$ gem install deadlink`
 
 ## Usage
 
-TODO: Write usage instructions here
+specify path of directory
+
+```
+$ deadlink <dir>
+```
+
+if your not specify <dir> path, `.` path is specfied. 
+
+```
+$ deadlink .
+```
+
 
 ## Development
 
@@ -32,8 +72,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/deadlink. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/yutakakinjyo/deadlink. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 ## License
 
