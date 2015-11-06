@@ -1,1 +1,1 @@
-- [abusolute link](/deadlink/test/files/dir2/abusolute.md)
+- [abusolute link](/test/files/dir2/abusolute.md)
