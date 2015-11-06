@@ -30,8 +30,21 @@ module Deadlink
 
     def link_path
       # split path ; <filename>#<title>
-      r = @link.match(/(?<filelink>[^#]*)#*(?<anchor>.*)/)
-      File.expand_path(r[:filelink], File.dirname(@file_path))
+      cap = @link.match(/(?<filelink>[^#]*)#*(?<anchor>.*)/)
+      if cap[:filelink][0] == "/"
+        return File.join(File.expand_path("../", repo_root), cap[:filelink])
+      end
+
+      File.expand_path(cap[:filelink], File.dirname(@file_path))
+    end
+
+    def repo_root
+      dir = File.dirname(@file_path)
+      while(!dir.empty?) do
+        return dir if Dir.exist?(File.join(dir, ".git"))
+        dir = File.expand_path("../", dir)
+      end
+      dir
     end
 
   end

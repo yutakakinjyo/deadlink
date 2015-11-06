@@ -5,7 +5,7 @@ module Deadlink
     end
 
     def md_files
-      Dir.glob(@target_dir + '/**/*.md')
+      Dir.glob(File.join(@target_dir, '/**/*.md'))
     end
 
     def paths(files)
