@@ -2,6 +2,7 @@ module Deadlink
   class Scanner
     def initialize(target_dir)
       @target_dir = target_dir
+      @repo_root = repo_root
     end
 
     def md_files
@@ -14,12 +15,33 @@ module Deadlink
         File.open(file) do |f|
           f.each_with_index do |line, index|
             line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
-              paths.push Path.new(f.path, link[0], index + 1)
+              paths.push Path.new(f.path, link[0], index + 1, @repo_root)
             end
           end
         end
       end
       Paths.new(paths)
     end
+
+    private
+
+    def repo_root
+      dir = @target_dir
+      until dir.empty? do
+        return dir if git_repo?(dir)
+        dir = prev_dir(dir)
+      end
+      dir
+    end
+
+    def git_repo?(dir)
+      Dir.exist?(File.join(dir, ".git"))
+    end
+
+    def prev_dir(dir)
+      return "" if dir == "/"
+      File.expand_path("../", dir)
+    end
+
   end
 end
