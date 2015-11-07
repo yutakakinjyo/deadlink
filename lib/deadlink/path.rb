@@ -40,11 +40,19 @@ module Deadlink
 
     def repo_root
       dir = File.dirname(@file_path)
-      while(!dir.empty?) do
-        return dir if Dir.exist?(File.join(dir, ".git"))
-        dir = File.expand_path("../", dir)
+      until dir.empty? do
+        return dir if git_repo?(dir)
+        dir = prev_dir(dir)
       end
       dir
+    end
+
+    def git_repo?(dir)
+      Dir.exist?(File.join(dir, ".git"))
+    end
+
+    def prev_dir(dir)
+      File.expand_path("../", dir)
     end
 
   end
