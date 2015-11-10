@@ -6,7 +6,3 @@ before_install: gem install bundler -v 1.10.6
 
 notifications:
   email: false
-
-addons:
-    code_climate:
-        repo_token: 0d557a2168555534d0327394c3bbf1d5885fd5e699265b7ffd9b9664c0fc6ec9
