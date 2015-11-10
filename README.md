@@ -20,8 +20,7 @@ case of this repository
 
 ```
 $ git clone git@github.com:yutakakinjyo/deadlink.git
-$ cd deadlink
-$ deadlink
+$ deadlink deadlink/
 ```
 
 result is this
