@@ -21,7 +21,5 @@ module Deadlink
       @paths.count
     end
 
-
-
   end
 end
