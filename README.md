@@ -57,7 +57,13 @@ specify path of directory
 $ deadlink <dir>
 ```
 
-if your not specify `<dir>` path, deadlink scan top directory of current git repository.
+if you want to start scanning from current directory, you can specify `.` to `<dir>` path
+
+```
+$ deadlink .
+```
+
+if you not specify `<dir>` path, deadlink scan top directory of current git repository.
 
 ```
 $ deadlink
