@@ -1,6 +1,7 @@
 # Deadlink
 
 [![Build Status](https://travis-ci.org/yutakakinjyo/deadlink.svg?branch=master)](https://travis-ci.org/yutakakinjyo/deadlink)
+[![Code Climate](https://codeclimate.com/github/yutakakinjyo/deadlink/badges/gpa.svg)](https://codeclimate.com/github/yutakakinjyo/deadlink)
 
 Check **deadlink** of markdown files in your git repository.
 
