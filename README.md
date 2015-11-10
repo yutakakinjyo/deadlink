@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/yutakakinjyo/deadlink.svg?branch=master)](https://travis-ci.org/yutakakinjyo/deadlink)
 [![Code Climate](https://codeclimate.com/github/yutakakinjyo/deadlink/badges/gpa.svg)](https://codeclimate.com/github/yutakakinjyo/deadlink)
-[![Coverage Status](https://coveralls.io/repos/yutakakinjyo/deadlink/badge.svg?branch=master&service=github)](https://coveralls.io/github/yutakakinjyo/deadlink?branch=master)
 [![Dependency Status](https://gemnasium.com/yutakakinjyo/deadlink.svg)](https://gemnasium.com/yutakakinjyo/deadlink)
 [![Gem Version](https://badge.fury.io/rb/deadlink.svg)](https://badge.fury.io/rb/deadlink)
 
