@@ -1,14 +1,14 @@
 module Deadlink
   class Path
-    def initialize(file_path, link, index, repo_root)
-      @file_path = file_path
+    def initialize(cur_file_path, link, index, repo_root)
+      @cur_file_path = cur_file_path
       @link = link
       @index = index
       @repo_root = repo_root
     end
 
     def deadlink
-      puts @link + ' in ' + @file_path + ' line: ' + @index.to_s if deadlink?
+      puts @link + ' in ' + @cur_file_path + ' line: ' + @index.to_s if deadlink?
     end
 
     def deadlink?
@@ -28,15 +28,18 @@ module Deadlink
     def url?
       @link =~ /https?:\/\/[\S]+/
     end
-
+    
     def link_path
-      # split path ; <filename>#<title>
-      cap = @link.match(/(?<filelink>[^#]*)#*(?<anchor>.*)/)
-      if absolute_path?(cap[:filelink])
-        return File.join(@repo_root, cap[:filelink])
+      if absolute_path?(path_hash[:filepath])
+        return File.join(@repo_root, path_hash[:filepath])
       end
 
-      File.expand_path(cap[:filelink], File.dirname(@file_path))
+      File.expand_path(path_hash[:filepath], File.dirname(@cur_file_path))
+    end
+
+    def path_hash
+      # split path ; <filename>#<title>
+      path_hash = @link.match(/(?<filepath>[^#]*)#*(?<anchor>.*)/)
     end
 
     def absolute_path?(path)
