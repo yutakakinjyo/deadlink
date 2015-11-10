@@ -57,12 +57,11 @@ specify path of directory
 $ deadlink <dir>
 ```
 
-if your not specify <dir> path, `.` path is specfied. 
+if your not specify <dir> path, deadlink scan top directory of current git repository.
 
 ```
-$ deadlink => $ deadlink .
+$ deadlink
 ```
-
 
 ## Development
 
