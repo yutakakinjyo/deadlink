@@ -2,11 +2,12 @@ module Deadlink
   class Scanner
     def initialize(target_dir)
       if target_dir.nil?
-        @target_dir = "."
+        @repo_root = repo_root(".")
+        @target_dir = @repo_root
       else
         @target_dir = target_dir
+        @repo_root = repo_root(@target_dir)
       end
-      @repo_root = repo_root(@target_dir)
     end
 
     def md_files

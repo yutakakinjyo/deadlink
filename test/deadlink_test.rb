@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'fakefs/safe'
 
 class DeadlinkTest < Minitest::Test
   def test_that_it_has_a_version_number
@@ -47,6 +48,27 @@ class DeadlinkTest < Minitest::Test
     files = @scanner.md_files
     paths = @scanner.paths(files)
     assert paths.deadlink_include?
+  end
+
+  def test_current_argment
+    FakeFS.activate!
+
+    FileUtils.mkdir_p 'git_repo/.git'
+    FileUtils.mkdir_p 'git_repo/files'
+
+    file_path = File.join('git_repo', 'mdfile.md')
+    File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+
+    file_path = File.join('git_repo/files', 'mdfile.md')
+    File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+    
+    FileUtils.cd 'git_repo/files'
+    scanner = Deadlink::Scanner.new(nil)
+
+    files = scanner.md_files
+    assert_equal 2, files.count
+
+    FakeFS.deactivate!
   end
 
 end
