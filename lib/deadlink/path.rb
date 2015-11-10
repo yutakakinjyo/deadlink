@@ -5,6 +5,10 @@ module Deadlink
       @link = link
       @index = index
       @repo_root = repo_root
+      
+      hash = split_link(link)
+      @link_file_path = hash[:filepath]
+      @anchor = hash[:anchor]
     end
 
     def deadlink
@@ -30,16 +34,16 @@ module Deadlink
     end
     
     def link_path
-      if absolute_path?(path_hash[:filepath])
-        return File.join(@repo_root, path_hash[:filepath])
+      if absolute_path?(@link_file_path)
+        return File.join(@repo_root, @link_file_path)
       end
 
-      File.expand_path(path_hash[:filepath], File.dirname(@cur_file_path))
+      File.expand_path(@link_file_path, File.dirname(@cur_file_path))
     end
 
-    def path_hash
+    def split_link(link)
       # split path ; <filename>#<title>
-      path_hash = @link.match(/(?<filepath>[^#]*)#*(?<anchor>.*)/)
+      hash = link.match(/(?<filepath>[^#]*)#*(?<anchor>.*)/)
     end
 
     def absolute_path?(path)
