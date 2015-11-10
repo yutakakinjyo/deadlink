@@ -1,18 +1,18 @@
 module Deadlink
   class Path
+
+    attr_reader :link, :cur_file_path, :index
+
     def initialize(cur_file_path, link, index, repo_root)
-      @cur_file_path = cur_file_path
       @link = link
+      @cur_file_path = cur_file_path
       @index = index
+
       @repo_root = repo_root
       
       hash = split_link(link)
       @link_file_path = hash[:filepath]
       @anchor = hash[:anchor]
-    end
-
-    def deadlink
-      puts @link + ' in ' + @cur_file_path + ' line: ' + @index.to_s if deadlink?
     end
 
     def deadlink?
