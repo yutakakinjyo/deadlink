@@ -1,5 +1,8 @@
 module Deadlink
   class Paths
+
+    attr_reader :deadlinks
+
     def initialize(paths)
       @paths = paths
       @deadlinks = paths.select { |path| path.deadlink? }
@@ -9,12 +12,8 @@ module Deadlink
       @deadlinks.any?
     end
 
-    def deadlinks
-      @deadlinks
-    end
-
     def print_deadlinks
-      @paths.each { |path| path.deadlink }
+      @deadlinks.each { |path| Decorator.print_info(path) }
     end
 
     def count
