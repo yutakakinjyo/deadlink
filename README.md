@@ -20,8 +20,7 @@ case of this repository
 
 ```
 $ git clone git@github.com:yutakakinjyo/deadlink.git
-$ cd deadlink
-$ deadlink
+$ deadlink deadlink/
 ```
 
 result is this
@@ -57,12 +56,17 @@ specify path of directory
 $ deadlink <dir>
 ```
 
-if your not specify <dir> path, `.` path is specfied. 
+if you want to start scanning from current directory, you can specify `.` to `<dir>` path
 
 ```
-$ deadlink => $ deadlink .
+$ deadlink .
 ```
 
+if you not specify `<dir>` path, deadlink scan top directory of current git repository.
+
+```
+$ deadlink
+```
 
 ## Development
 
