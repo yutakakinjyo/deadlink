@@ -12,8 +12,8 @@ module Deadlink
       @deadlinks.any?
     end
 
-    def print_deadlinks
-      @deadlinks.each { |path| Decorator.print_info(path) }
+    def print_deadlinks(opts)
+      @deadlinks.each { |path| Decorator.print_info(path,opts) }
     end
 
     def count

@@ -2,5 +2,6 @@
 
 require 'deadlink'
 
+opts = ARGV.getopts('','p')
 target_dir = ARGV[0]
-Deadlink.scan(target_dir)
+Deadlink.scan(target_dir,opts)
