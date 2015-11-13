@@ -1,8 +1,13 @@
 module Deadlink
   class Scanner
     def initialize(target_dir)
-      @target_dir = target_dir
-      @repo_root = repo_root
+      if target_dir.nil?
+        @repo_root = repo_root(".")
+        @target_dir = @repo_root
+      else
+        @target_dir = target_dir
+        @repo_root = repo_root(@target_dir)
+      end
     end
 
     def md_files
@@ -25,8 +30,8 @@ module Deadlink
 
     private
 
-    def repo_root
-      dir = @target_dir
+    def repo_root(target_dir)
+      dir = target_dir
       until dir.empty? do
         return dir if git_repo?(dir)
         dir = prev_dir(dir)
