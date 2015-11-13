@@ -21,9 +21,5 @@ module Deadlink
       @paths.count
     end
 
-    def [](i)
-      @paths[i]
-    end
-
   end
 end
