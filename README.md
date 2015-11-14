@@ -71,6 +71,25 @@ if you not specify `<dir>` path, deadlink scan top directory of current git repo
 $ deadlink
 ```
 
+### Option
+
+`-p` option output for editor. In this repository case
+
+`$ deadlink -p deadlink/`
+
+```
++46 ./README.md
++90 ./README.md
++2 ./test/files/dir1/nest_file1.md
++3 ./test/files/top.md
++5 ./test/files/top.md
++8 ./test/files/top.md
+```
+
+Forexample you can use like following
+
+`$ vi $(deadlink -p deadlink/ | peco)`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
