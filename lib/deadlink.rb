@@ -6,7 +6,10 @@ require 'deadlink/decorator'
 require 'optparse'
 
 module Deadlink
-  def self.scan(target_dir,opts)
+  def self.scan()
+    target_dir = ARGV[0]
+    opts = ARGV.getopts('','p')
+
     scanner = Scanner.new(target_dir)
     files = scanner.md_files
     paths = scanner.paths(files)

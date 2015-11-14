@@ -71,4 +71,42 @@ class DeadlinkTest < Minitest::Test
     FakeFS.deactivate!
   end
 
+  def test_non_option
+    assert_output("dummy in mdfile.md line: 1\n")  { 
+
+      FakeFS.activate!
+
+      FileUtils.mkdir_p 'git_repo/.git'
+      file_path = File.join('git_repo', 'mdfile.md')
+      File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+      FileUtils.cd 'git_repo'
+
+      Deadlink.scan() 
+
+      FakeFS.deactivate!
+    }
+  end
+
+  def test_p_option
+    assert_output("+1 mdfile.md\n")  { 
+
+      FakeFS.activate!
+
+      FileUtils.mkdir_p 'git_repo/.git'
+      file_path = File.join('git_repo', 'mdfile.md')
+      File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+      FileUtils.cd 'git_repo'
+
+      target_dir = nil
+      opts = {'p' => true}
+      scanner = Deadlink::Scanner.new(target_dir)
+      files = scanner.md_files
+      paths = scanner.paths(files)
+      paths.print_deadlinks(opts)
+
+      FakeFS.deactivate!
+    }
+  end
+
+
 end
