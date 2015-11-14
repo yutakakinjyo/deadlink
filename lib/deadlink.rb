@@ -7,8 +7,10 @@ require 'optparse'
 
 module Deadlink
   def self.scan()
-    target_dir = ARGV[0]
+
     opts = ARGV.getopts('','p')
+    target_dir = ARGV[0]
+
 
     scanner = Scanner.new(target_dir)
     files = scanner.md_files
