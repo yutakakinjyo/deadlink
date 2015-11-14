@@ -86,7 +86,7 @@ $ deadlink
 +8 ./test/files/top.md
 ```
 
-Forexample you can use like following
+Forexample you can jump deadlink line easily, like following command.
 
 `$ vi $(deadlink -p deadlink/ | peco)`
 
