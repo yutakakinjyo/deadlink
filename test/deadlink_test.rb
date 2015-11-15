@@ -11,27 +11,6 @@ class DeadlinkTest < Minitest::Test
     @scanner = Deadlink::Scanner.new(@target_dir)
   end
 
-  def test_get_md_files
-    files = @scanner.md_files
-    assert_equal 11, files.count
-    assert files.include?(@target_dir + '/file1.md')
-    assert files.include?(@target_dir + '/file2.md')
-    assert files.include?(@target_dir + '/top.md')
-    assert files.include?(@target_dir + '/dir1/nest_file1.md')
-    assert files.include?(@target_dir + '/dir1/nest_file2.md')
-    assert files.include?(@target_dir + '/dir2/http.md')
-  end
-
-  def test_get_nest_md_files
-    target_dir = File.expand_path('files/dir1', File.dirname(__FILE__))
-    scanner = Deadlink::Scanner.new(target_dir)
-
-    files = scanner.md_files
-    assert_equal 2, files.count
-    assert files.include?(target_dir + '/nest_file1.md')
-    assert files.include?(target_dir + '/nest_file2.md')
-  end
-
   def test_get_paths
     files = @scanner.md_files
     paths = @scanner.paths(files)
@@ -68,6 +47,7 @@ class DeadlinkTest < Minitest::Test
     files = scanner.md_files
     assert_equal 2, files.count
 
+    FakeFS::FileSystem.clear
     FakeFS.deactivate!
   end
 
@@ -83,6 +63,7 @@ class DeadlinkTest < Minitest::Test
 
       Deadlink.scan() 
 
+      FakeFS::FileSystem.clear
       FakeFS.deactivate!
     }
   end
@@ -104,6 +85,7 @@ class DeadlinkTest < Minitest::Test
       paths = scanner.paths(files)
       paths.print_deadlinks(opts)
 
+      FakeFS::FileSystem.clear
       FakeFS.deactivate!
     }
   end
