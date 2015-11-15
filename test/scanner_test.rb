@@ -2,9 +2,6 @@ require 'test_helper'
 require 'fakefs/safe'
 
 class DeadlinkTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Deadlink::VERSION
-  end
 
   def setup
     @target_dir = File.expand_path('files', File.dirname(__FILE__))
