@@ -66,5 +66,15 @@ class DeadlinkTest < Minitest::Test
     FakeFS::FileSystem.clear
     FakeFS.deactivate!
   end
+
+  def test_invalid_file_path
+
+    target = './nothing_dif'
+
+    assert_raises( ArgumentError ) {
+      Deadlink::Scanner.new(target)
+    }
+    
+  end
   
 end
