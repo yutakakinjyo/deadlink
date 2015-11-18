@@ -4,10 +4,9 @@ module Deadlink
     attr_reader :link, :cur_file_path, :index
 
     def initialize(cur_file_path, link, index, repo_root)
-      @link = link
       @cur_file_path = cur_file_path
+      @link = link
       @index = index
-
       @repo_root = repo_root
       
       hash = split_link(link)
@@ -16,7 +15,7 @@ module Deadlink
     end
 
     def deadlink?
-      !FileTest.exist?(link_path) && ignore 
+      !FileTest.exist?(abusolute_path) && ignore 
     end
 
     private
@@ -29,12 +28,12 @@ module Deadlink
       @link =~ /https?:\/\/[\S]+/
     end
     
-    def link_path
-      if absolute_path?(@link_file_path)
+    def abusolute_path
+      if specify_root?(@link_file_path)
         return File.join(@repo_root, @link_file_path)
+      else
+        return File.expand_path(@link_file_path, File.dirname(@cur_file_path))
       end
-
-      File.expand_path(@link_file_path, File.dirname(@cur_file_path))
     end
 
     def split_link(link)
@@ -42,7 +41,7 @@ module Deadlink
       hash = link.match(/(?<filepath>[^#]*)#*(?<anchor>.*)/)
     end
 
-    def absolute_path?(path)
+    def specify_root?(path)
       path[0] == "/"
     end
 
