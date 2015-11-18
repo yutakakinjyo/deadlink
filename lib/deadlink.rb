@@ -11,10 +11,13 @@ module Deadlink
     opts = ARGV.getopts('','p')
     target_dir = ARGV[0]
 
-
-    scanner = Scanner.new(target_dir)
-    files = scanner.md_files
-    paths = scanner.paths(files)
-    paths.print_deadlinks(opts)
+    begin
+      scanner = Scanner.new(target_dir)
+      files = scanner.md_files
+      paths = scanner.paths(files)
+      paths.print_deadlinks(opts)
+    rescue => e
+      e.message
+    end
   end
 end
