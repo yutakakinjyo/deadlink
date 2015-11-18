@@ -4,5 +4,7 @@ rvm:
 
 before_install: gem install bundler -v 1.10.6
 
+cache: bundler
+
 notifications:
   email: false
