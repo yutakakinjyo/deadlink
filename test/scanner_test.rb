@@ -49,5 +49,22 @@ class DeadlinkTest < Minitest::Test
     FakeFS.deactivate!
   end
 
+  def test_specify_a_file
+    FakeFS.activate!
 
+    FileUtils.mkdir_p 'git_repo/.git'
+    file_path = File.join('git_repo', 'mdfile.md')
+    File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+    FileUtils.cd 'git_repo'
+
+    target = 'mdfile.md'
+    scanner = Deadlink::Scanner.new(target)
+    files = scanner.md_files
+
+    assert_equal 1, files.count
+
+    FakeFS::FileSystem.clear
+    FakeFS.deactivate!
+  end
+  
 end

@@ -11,7 +11,12 @@ module Deadlink
     end
 
     def md_files
-      Dir.glob(File.join(@target_dir, '/**/*.{md,markdown}'))
+      if File.directory?(@target_dir)
+        Dir.glob(File.join(@target_dir, '/**/*.{md,markdown}'))
+      else
+        files = []
+        files.push(@target_dir)
+      end
     end
 
     def paths(files)
