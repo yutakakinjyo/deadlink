@@ -56,7 +56,7 @@ module Deadlink
     end
 
     def validate(target_dir)
-      unless Dir.exist?(target_dir) || File.exist?(target_dir)
+      unless FileTest.exist?(target_dir)
         raise ArgumentError, "wrong path"
       end
     end

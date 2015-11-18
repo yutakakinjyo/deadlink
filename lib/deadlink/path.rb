@@ -16,14 +16,10 @@ module Deadlink
     end
 
     def deadlink?
-      !exist? && ignore 
+      !FileTest.exist?(link_path) && ignore 
     end
 
     private
-    
-    def exist?
-      File.exist?(link_path) || Dir.exist?(link_path)
-    end
 
     def ignore
       !url?
