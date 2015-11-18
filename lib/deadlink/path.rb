@@ -38,7 +38,7 @@ module Deadlink
     end
 
     def split_link(link)
-      # split <filenpath>#<title>
+      # split <filenpath>#<anchor>
       hash = link.match(/(?<filepath>[^#]*)#*(?<anchor>.*)/)
     end
 
