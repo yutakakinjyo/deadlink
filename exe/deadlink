@@ -3,3 +3,4 @@
 require 'deadlink'
 
 Deadlink.scan()
+
