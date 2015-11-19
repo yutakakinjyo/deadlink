@@ -9,15 +9,20 @@ module Deadlink
   def self.scan()
 
     opts = ARGV.getopts('','p')
-    target_dir = ARGV[0]
+    target_path = ARGV[0]
 
-    scanner = Scanner.new(target_dir)
+    scanner = Scanner.new(target_path)
 
     unless scanner.valid?
       exit 1
     end
 
     files = scanner.md_files
+
+    if files.empty?
+      exit 0
+    end
+
     paths = scanner.paths(files)
     paths.print_deadlinks(opts)
   end
