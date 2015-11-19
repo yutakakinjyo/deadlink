@@ -18,6 +18,11 @@ module Deadlink
     end
 
     files = scanner.md_files
+
+    if files.empty?
+      exit 0
+    end
+
     paths = scanner.paths(files)
     paths.print_deadlinks(opts)
   end
