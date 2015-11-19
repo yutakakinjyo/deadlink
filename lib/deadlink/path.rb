@@ -1,7 +1,8 @@
+# coding: utf-8
 module Deadlink
   class Path
 
-    attr_reader :link, :cur_file_path, :index
+    attr_reader :cur_file_path, :link, :index
 
     def initialize(cur_file_path, link, index, repo_root)
       @cur_file_path = cur_file_path
@@ -15,20 +16,24 @@ module Deadlink
     end
 
     def deadlink?
-      !FileTest.exist?(abusolute_path) && ignore 
+      not_exist? && not_ignore?
     end
 
     private
 
-    def ignore
-      !url?
+    def exist?
+      FileTest.exist?(abusolute_link_file_path)
+    end
+    
+    def ignore?
+      url?
     end
 
     def url?
       @link =~ /https?:\/\/[\S]+/
     end
     
-    def abusolute_path
+    def abusolute_link_file_path
       if specify_root?(@link_file_path)
         return File.join(@repo_root, @link_file_path)
       else
@@ -45,5 +50,15 @@ module Deadlink
       path[0] == "/"
     end
 
+    ## negative wrap 
+    
+    def not_exist?
+      !exist?
+    end
+
+    def not_ignore?
+      !ignore?
+    end
+    
   end
 end
