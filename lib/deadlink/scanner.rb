@@ -1,29 +1,29 @@
 module Deadlink
   class Scanner
-    def initialize(target_dir)
-      if target_dir.nil?
+    def initialize(target_path)
+      if target_path.nil?
         @repo_root = repo_root(".")
-        @target_dir = @repo_root
+        @target_path = @repo_root
       else
-        @target_dir = target_dir
-        @repo_root = repo_root(@target_dir)
+        @target_path = target_path
+        @repo_root = repo_root(@target_path)
       end
     end
 
     def valid?
-      unless FileTest.exist?(@target_dir)
-        puts @target_dir + ": No such file or directory"
+      unless FileTest.exist?(@target_path)
+        puts @target_path + ": No such file or directory"
         return false
       end
       return true
     end
 
     def md_files
-      if File.directory?(@target_dir)
-        Dir.glob(File.join(@target_dir, '/**/*.{md,markdown}'))
+      if File.directory?(@target_path)
+        Dir.glob(File.join(@target_path, '/**/*.{md,markdown}'))
       else
         files = []
-        files.push(@target_dir)
+        files.push(@target_path)
       end
     end
 
@@ -43,8 +43,8 @@ module Deadlink
 
     private
 
-    def repo_root(target_dir)
-      dir = target_dir
+    def repo_root(target_path)
+      dir = target_path
       until dir.empty? do
         return dir if git_repo?(dir)
         dir = prev_dir(dir)
