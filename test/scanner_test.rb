@@ -71,9 +71,11 @@ class DeadlinkTest < Minitest::Test
 
     target = './nothing_dif'
 
-    assert_raises( ArgumentError ) {
-      Deadlink::Scanner.new(target)
+    assert_output ( "./nothing_dif: No such file or directory\n" ) {
+      scanner = Deadlink::Scanner.new(target)
+      refute scanner.valid?
     }
+
     
   end
   

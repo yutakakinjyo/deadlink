@@ -1,15 +1,21 @@
 module Deadlink
   class Scanner
     def initialize(target_dir)
-
       if target_dir.nil?
         @repo_root = repo_root(".")
         @target_dir = @repo_root
       else
-        validate(target_dir)
         @target_dir = target_dir
         @repo_root = repo_root(@target_dir)
       end
+    end
+
+    def valid?
+      unless FileTest.exist?(@target_dir)
+        puts @target_dir + ": No such file or directory"
+        return false
+      end
+      return true
     end
 
     def md_files
@@ -53,12 +59,6 @@ module Deadlink
     def prev_dir(dir)
       return "" if dir == "/"
       File.expand_path("../", dir)
-    end
-
-    def validate(target_dir)
-      unless FileTest.exist?(target_dir)
-        raise ArgumentError, "wrong path"
-      end
     end
 
   end
