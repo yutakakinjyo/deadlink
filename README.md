@@ -45,7 +45,6 @@ this gem not check following patterns yet. applying these patterns to gem is fut
 - anchor link ( only check file path part )
   - e.g. `[anhor link](example.md#title1)` => check example.md 
 - multibyte characters
-- specify file.
 
 ## Installation
 
@@ -53,7 +52,7 @@ this gem not check following patterns yet. applying these patterns to gem is fut
 
 ## Usage
 
-specify path of directory
+### specify path of directory
 
 ```
 $ deadlink <dir>
@@ -69,6 +68,12 @@ if you not specify `<dir>` path, deadlink scan top directory of current git repo
 
 ```
 $ deadlink
+```
+
+### specify a file
+
+```
+$ deadlink <file path>
 ```
 
 ### Option
