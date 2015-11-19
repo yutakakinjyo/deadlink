@@ -6,28 +6,6 @@ class DeadlinkTest < Minitest::Test
     refute_nil ::Deadlink::VERSION
   end
 
-  def setup
-    @target_dir = File.expand_path('files', File.dirname(__FILE__))
-    @scanner = Deadlink::Scanner.new(@target_dir)
-  end
-
-  def test_get_paths
-    files = @scanner.md_files
-    paths = @scanner.paths(files)
-    assert_equal 15, paths.count
-  end
-
-  def test_check_deadlinks
-    files = @scanner.md_files
-    paths = @scanner.paths(files)
-    assert_equal 4, paths.deadlinks.count
-  end
-
-  def test_check_exist
-    files = @scanner.md_files
-    paths = @scanner.paths(files)
-    assert paths.deadlink_include?
-  end
 
   def test_current_argment
     FakeFS.activate!
