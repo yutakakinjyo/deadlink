@@ -33,6 +33,9 @@ class PathTest < Minitest::Test
   end
 
   def test_noting_anchor
+
+    skip("pending")
+    
     FakeFS.activate!
 
     FileUtils.mkdir_p 'git_repo/.git'
