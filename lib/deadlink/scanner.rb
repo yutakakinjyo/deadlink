@@ -33,7 +33,7 @@ module Deadlink
         File.open(file) do |f|
           f.each_with_index do |line, index|
             line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
-              paths.push Path.new(f.path, link[0], index + 1, @repo_root)
+              paths.push Path.new(f.path, link[0], index + 1, @repo_root, nil)
             end
           end
         end

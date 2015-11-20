@@ -4,11 +4,12 @@ module Deadlink
 
     attr_reader :cur_file_path, :link, :index
 
-    def initialize(cur_file_path, link, index, repo_root)
+    def initialize(cur_file_path, link, index, repo_root, axt_headers)
       @cur_file_path = cur_file_path
       @link = link
       @index = index
       @repo_root = repo_root
+      @axt_headers = axt_headers
       
       hash = split_link(link)
       @link_file_path = hash[:filepath]
@@ -22,15 +23,11 @@ module Deadlink
     private
 
     def exist?
-      FileTest.exist?(abusolute_link_file_path)
-    end
-    
-    def ignore?
-      url?
+      FileTest.exist?(abusolute_link_file_path) || anchor_exist?
     end
 
-    def url?
-      @link =~ /https?:\/\/[\S]+/
+    def anchor_exist?
+      
     end
     
     def abusolute_link_file_path
@@ -48,6 +45,14 @@ module Deadlink
 
     def specify_root?(path)
       path[0] == "/"
+    end
+
+    def ignore?
+      url?
+    end
+
+    def url?
+      @link =~ /https?:\/\/[\S]+/
     end
 
     ## negative wrap 
