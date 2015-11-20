@@ -32,5 +32,27 @@ class PathTest < Minitest::Test
      assert paths.deadlink_include?
   end
 
+  def test_noting_anchor
+    FakeFS.activate!
+
+    FileUtils.mkdir_p 'git_repo/.git'
+    file_path = File.join('git_repo', 'mdfile.md')
+
+    File.open(file_path, 'a') do |f|
+      f.puts "[dummy](mdfile.md#nothing_title)"
+    end
+    
+    FileUtils.cd 'git_repo'
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+
+    assert_equal 1, paths.deadlinks.count
+
+    FakeFS::FileSystem.clear
+    FakeFS.deactivate!
+  end
+
   
 end
