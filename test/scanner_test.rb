@@ -72,7 +72,6 @@ class DeadlinkTest < Minitest::Test
       scanner = Deadlink::Scanner.new(target)
       refute scanner.valid?
     }
-
     
   end
   

@@ -27,6 +27,19 @@ module Deadlink
       end
     end
 
+    def headers(file)
+      headers = []
+      File.open(file) do |f|
+        f.each do |line|
+          line.scan /^\#{1,6} +(.+)/ do |header|
+            headers.push header
+          end
+        end
+      end
+      headers
+    end
+
+
     def paths(files)
       paths = []
       files.each do |file|
