@@ -18,17 +18,7 @@ module Deadlink
       return true
     end
 
-    # TODO : will remove method
     def md_files
-      if File.directory?(@target_path)
-        Dir.glob(File.join(@target_path, '/**/*.{md,markdown}'))
-      else
-        files = []
-        files.push(@target_path)
-      end
-    end
-
-    def files
       files = []
       if File.directory?(@target_path)
         Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
@@ -58,7 +48,7 @@ module Deadlink
     def paths(files)
       paths = []
       files.each do |file|
-        File.open(file) do |f|
+        File.open(file.path) do |f|
           f.each_with_index do |line, index|
             line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
               paths.push Path.new(f.path, link[0], index + 1, @repo_root, nil)

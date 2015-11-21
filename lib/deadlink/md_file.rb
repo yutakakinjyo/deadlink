@@ -1,17 +1,17 @@
 module Deadlink
   class MdFile
 
-    attr_reader :file_path, :headers, :paths
+    attr_reader :path, :headers, :link_paths
     
     def initialize(file_path, repo_root)
-      @file_path = file_path
-      @headers = scan_headers(file_path)
-      @paths = scan_paths(file_path, repo_root)
+      @path = file_path
+      @headers = _headers(file_path)
+      @link_paths = _link_paths(file_path, repo_root)
     end
 
     private
     
-    def scan_headers(file_path)
+    def _headers(file_path)
       headers = []
       File.open(file_path) do |f|
         f.each do |line|
@@ -23,7 +23,7 @@ module Deadlink
       headers
     end
 
-    def scan_paths(file_path, repo_root)
+    def _link_paths(file_path, repo_root)
       paths = []
       File.open(file_path) do |f|
         f.each_with_index do |line, index|
@@ -33,6 +33,6 @@ module Deadlink
         end
       end
     end
-    
+
   end
 end

@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'fakefs/safe'
 
-class DeadlinkTest < Minitest::Test
+class MdFileTest < Minitest::Test
 
   
   def ready_file
@@ -24,7 +24,7 @@ class DeadlinkTest < Minitest::Test
     end
     
     scanner = Deadlink::Scanner.new(nil)
-    files = scanner.files
+    files = scanner.md_files
     headers = files[0].headers
 
     assert_equal 1, headers.count
@@ -43,7 +43,8 @@ class DeadlinkTest < Minitest::Test
 
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0])
+
+    headers = scanner.headers(files[0].path)
 
     assert_equal 1, headers.count
     assert_equal "header1", headers[0]
@@ -61,7 +62,7 @@ class DeadlinkTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0])
+    headers = scanner.headers(files[0].path)
 
     assert_equal 0, headers.count
 
@@ -79,7 +80,7 @@ class DeadlinkTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0])
+    headers = scanner.headers(files[0].path)
 
     assert_equal 2, headers.count
     assert_equal "header1", headers[0]
@@ -99,7 +100,7 @@ class DeadlinkTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0])
+    headers = scanner.headers(files[0].path)
 
     assert_equal 0, headers.count
 
@@ -116,7 +117,7 @@ class DeadlinkTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0])
+    headers = scanner.headers(files[0].path)
     assert_equal 0, headers.count
 
     close_file
