@@ -22,11 +22,11 @@ module Deadlink
       files = []
       if File.directory?(@target_path)
         Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
-          files.push(MdFile.new(file_path, @repo_root))
+          files.push(MdFile.new(file_path))
         end
       else
         files = []
-        files.push(MdFile.new(@target_path, @repo_root))
+        files.push(MdFile.new(@target_path))
       end
       files
     end
@@ -34,12 +34,25 @@ module Deadlink
     def paths(files)
       paths = []
       files.each do |file|
-        file.link_paths.each { |path| paths.push path }
+        paths.concat(scan_paths(file.path))
       end
       Paths.new(paths)
     end
 
     private
+
+    def scan_paths(file_path)
+      paths = []
+      File.open(file_path) do |f|
+        f.each_with_index do |line, index|
+          line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
+            paths.push Path.new(f.path, link[0], index + 1, @repo_root)
+          end
+        end
+      end
+      paths
+    end
+
 
     def repo_root(target_path)
       dir = target_path

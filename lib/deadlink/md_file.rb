@@ -3,10 +3,9 @@ module Deadlink
 
     attr_reader :path, :headers, :link_paths
     
-    def initialize(file_path, repo_root)
+    def initialize(file_path)
       @path = file_path
       @headers = _headers(file_path)
-      @link_paths = _link_paths(file_path, repo_root)
     end
 
     private
@@ -21,18 +20,6 @@ module Deadlink
         end
       end
       headers
-    end
-
-    def _link_paths(file_path, repo_root)
-      paths = []
-      File.open(file_path) do |f|
-        f.each_with_index do |line, index|
-          line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
-            paths.push Path.new(f.path, link[0], index + 1, repo_root)
-          end
-        end
-      end
-      paths
     end
 
   end

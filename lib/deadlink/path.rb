@@ -21,11 +21,7 @@ module Deadlink
     private
 
     def exist?
-      FileTest.exist?(abusolute_link_file_path) || anchor_exist?
-    end
-
-    def anchor_exist?
-      
+      FileTest.exist?(abusolute_link_file_path)
     end
     
     def abusolute_link_file_path
