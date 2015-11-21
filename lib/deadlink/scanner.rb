@@ -32,11 +32,11 @@ module Deadlink
       files = []
       if File.directory?(@target_path)
         Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
-          files.push(MdFile.new(file_path))
+          files.push(MdFile.new(file_path, @repo_root))
         end
       else
         files = []
-        files.push(MdFile.new(@target_path))
+        files.push(MdFile.new(@target_path, @repo_root))
       end
       files
     end
@@ -54,6 +54,7 @@ module Deadlink
       headers
     end
 
+    # TODO : will remove method. move to MdFile Class
     def paths(files)
       paths = []
       files.each do |file|
