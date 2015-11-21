@@ -1,15 +1,13 @@
-# coding: utf-8
 module Deadlink
   class Path
 
     attr_reader :cur_file_path, :link, :index
 
-    def initialize(cur_file_path, link, index, repo_root, axt_headers)
+    def initialize(cur_file_path, link, index, repo_root)
       @cur_file_path = cur_file_path
       @link = link
       @index = index
       @repo_root = repo_root
-      @axt_headers = axt_headers
       
       hash = split_link(link)
       @link_file_path = hash[:filepath]
