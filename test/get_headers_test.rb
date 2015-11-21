@@ -24,8 +24,8 @@ class DeadlinkTest < Minitest::Test
     end
     
     scanner = Deadlink::Scanner.new(nil)
-    files = scanner.md_files
-    headers = scanner.headers(files[0])
+    files = scanner.files
+    headers = files[0].headers
 
     assert_equal 1, headers.count
     assert_equal "header1", headers[0]
@@ -126,6 +126,8 @@ class DeadlinkTest < Minitest::Test
 
     skip();
     
+    ready_file
+    
     File.open('mdfils.md', 'a') do |f|
       f.puts "# file1 header"
     end
@@ -136,8 +138,9 @@ class DeadlinkTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0])
-    assert_equal 0, headers.count
+    assert_equal 2, files[0].headers.count
+
+    close_file
   end
   
 end

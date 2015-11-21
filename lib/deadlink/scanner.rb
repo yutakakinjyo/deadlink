@@ -18,6 +18,7 @@ module Deadlink
       return true
     end
 
+    # TODO : will remove method
     def md_files
       if File.directory?(@target_path)
         Dir.glob(File.join(@target_path, '/**/*.{md,markdown}'))
@@ -27,6 +28,20 @@ module Deadlink
       end
     end
 
+    def files
+      files = []
+      if File.directory?(@target_path)
+        Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
+          files.push(MdFile.new(file_path))
+        end
+      else
+        files = []
+        files.push(MdFile.new(@target_path))
+      end
+      files
+    end
+
+    # TODO : will remove method. move to MdFile Class
     def headers(file)
       headers = []
       File.open(file) do |f|
