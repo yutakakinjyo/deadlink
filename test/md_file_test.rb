@@ -4,21 +4,19 @@ require 'fakefs/safe'
 class MdFileTest < Minitest::Test
 
   
-  def ready_file
+  def setup
     FileUtils.mkdir_p 'git_repo/.git'
     FileUtils.cd 'git_repo'
     FakeFS.activate!
   end
 
-  def close_file
+  def teardown
     FakeFS::FileSystem.clear
     FakeFS.deactivate!
   end
   
   def test_get_single_atx_headers
 
-    ready_file
-    
     File.open('mdfils.md', 'a') do |f|
       f.puts "# header1"
     end
@@ -30,13 +28,10 @@ class MdFileTest < Minitest::Test
     assert_equal 1, headers.count
     assert_equal "header1", headers[0]
 
-    close_file
   end
 
   def test_get_two_atx_headers
 
-    ready_file
-    
     File.open('mdfils.md', 'a') do |f|
       f.puts "## header1"
     end
@@ -49,13 +44,10 @@ class MdFileTest < Minitest::Test
     assert_equal 1, headers.count
     assert_equal "header1", headers[0]
 
-    close_file
   end
 
   def test_bad_synntax_atx_headers
 
-    ready_file
-    
     File.open('mdfils.md', 'a') do |f|
       f.puts "#header1"
     end
@@ -66,12 +58,9 @@ class MdFileTest < Minitest::Test
 
     assert_equal 0, headers.count
 
-    close_file
   end
 
   def test_two_sentence_atx_headers
-
-    ready_file
 
     File.open('mdfils.md', 'a') do |f|
       f.puts "# header1"
@@ -86,14 +75,11 @@ class MdFileTest < Minitest::Test
     assert_equal "header1", headers[0]
     assert_equal "header2", headers[1]
 
-    close_file
   end
 
 
   def test_many_atx_headers
 
-    ready_file
-    
     File.open('mdfils.md', 'a') do |f|
       f.puts "####### header1"
     end
@@ -104,13 +90,10 @@ class MdFileTest < Minitest::Test
 
     assert_equal 0, headers.count
 
-    close_file
   end
   
   def test_get_nothing_atx_headers
 
-    ready_file
-    
     File.open('mdfils.md', 'a') do |f|
       f.puts "[dummy](mdfile.md#header1)"
     end
@@ -120,7 +103,6 @@ class MdFileTest < Minitest::Test
     headers = scanner.headers(files[0].path)
     assert_equal 0, headers.count
 
-    close_file
   end
 
   def test_two_file_atx_headers
