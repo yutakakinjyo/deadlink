@@ -77,7 +77,6 @@ class MdFileTest < Minitest::Test
 
   end
 
-
   def test_many_atx_headers
 
     File.open('mdfils.md', 'a') do |f|
@@ -105,24 +104,21 @@ class MdFileTest < Minitest::Test
   end
 
   def test_two_file_atx_headers
-
-    skip();
-    
-    ready_file
     
     File.open('mdfils.md', 'a') do |f|
       f.puts "# file1 header"
     end
 
     File.open("mdifle2.md", 'a') do |f|
-      f.puts "# file2 header"
+      f.puts "# file2 header1"
+      f.puts "# file2 header2"
     end
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    assert_equal 2, files[0].headers.count
+    assert_equal 1, files[0].headers.count
+    assert_equal 2, files[1].headers.count
 
-    close_file
   end
   
 end

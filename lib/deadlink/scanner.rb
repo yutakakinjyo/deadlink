@@ -30,7 +30,7 @@ module Deadlink
       end
       files
     end
-    
+
     # TODO : will remove method. move to MdFile Class
     def paths(files)
       paths = []
