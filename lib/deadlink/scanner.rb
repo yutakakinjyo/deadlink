@@ -30,20 +30,7 @@ module Deadlink
       end
       files
     end
-
-    # TODO : will remove method. move to MdFile Class
-    def headers(file)
-      headers = []
-      File.open(file) do |f|
-        f.each do |line|
-          if line =~ /^\#{1,6} +(?<header>.+)/ # capture sharp header part
-            headers.push Regexp.last_match[:header]
-          end
-        end
-      end
-      headers
-    end
-
+    
     # TODO : will remove method. move to MdFile Class
     def paths(files)
       paths = []

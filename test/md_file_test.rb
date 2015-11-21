@@ -39,7 +39,7 @@ class MdFileTest < Minitest::Test
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
 
-    headers = scanner.headers(files[0].path)
+    headers = files[0].headers
 
     assert_equal 1, headers.count
     assert_equal "header1", headers[0]
@@ -54,7 +54,7 @@ class MdFileTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0].path)
+    headers = files[0].headers
 
     assert_equal 0, headers.count
 
@@ -69,7 +69,7 @@ class MdFileTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0].path)
+    headers = files[0].headers
 
     assert_equal 2, headers.count
     assert_equal "header1", headers[0]
@@ -86,8 +86,7 @@ class MdFileTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0].path)
-
+    headers = files[0].headers
     assert_equal 0, headers.count
 
   end
@@ -100,7 +99,7 @@ class MdFileTest < Minitest::Test
     
     scanner = Deadlink::Scanner.new(nil)
     files = scanner.md_files
-    headers = scanner.headers(files[0].path)
+    headers = files[0].headers
     assert_equal 0, headers.count
 
   end
