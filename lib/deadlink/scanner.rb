@@ -31,14 +31,13 @@ module Deadlink
       headers = []
       File.open(file) do |f|
         f.each do |line|
-          line.scan /^\#{1,6} +(.+)/ do |header|
-            headers.push header
+          if line =~ /^\#{1,6} +(?<header>.+)/ # capture sharp header part
+            headers.push Regexp.last_match[:header]
           end
         end
       end
       headers
     end
-
 
     def paths(files)
       paths = []
