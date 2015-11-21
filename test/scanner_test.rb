@@ -4,25 +4,29 @@ require 'fakefs/safe'
 class ScannerTest < Minitest::Test
 
   def setup
-    @target_dir = File.expand_path('files', File.dirname(__FILE__))
-    @scanner = Deadlink::Scanner.new(@target_dir)
+    FakeFS.activate!
+  end
+
+  def teardown
+    FakeFS::FileSystem.clear
+    FakeFS.deactivate!
   end
 
   def test_get_md_files
-    files = @scanner.md_files
-    assert_equal 11, files.count
-  end
 
-  def test_get_nest_md_files
-    target_dir = File.expand_path('files/dir1', File.dirname(__FILE__))
-    scanner = Deadlink::Scanner.new(target_dir)
+    FileUtils.mkdir_p 'git_repo/.git'
+    FileUtils.mkdir_p 'git_repo/dir1/'
+    FileUtils.mkdir_p 'git_repo/dir2/'
+    FileUtils.touch('git_repo/file1.md')
+    FileUtils.touch('git_repo/dir1/file2.md')
+    FileUtils.touch('git_repo/dir2/file3.md')
 
-    files = scanner.md_files
-    assert_equal 2, files.count
+    sccaner = Deadlink::Scanner.new('git_repo')
+    files = sccaner.md_files
+    assert_equal 3, files.count
   end
 
   def test_markdown_extension
-    FakeFS.activate!
 
     FileUtils.mkdir_p 'git_repo/.git'
 
@@ -33,13 +37,9 @@ class ScannerTest < Minitest::Test
 
     files = scanner.md_files
     assert_equal 1, files.count
-
-    FakeFS::FileSystem.clear
-    FakeFS.deactivate!
   end
 
   def test_specify_a_file
-    FakeFS.activate!
 
     FileUtils.mkdir_p 'git_repo/.git'
     file_path = File.join('git_repo', 'mdfile.md')
@@ -51,9 +51,6 @@ class ScannerTest < Minitest::Test
     files = scanner.md_files
 
     assert_equal 1, files.count
-
-    FakeFS::FileSystem.clear
-    FakeFS.deactivate!
   end
 
   def test_invalid_file_path
