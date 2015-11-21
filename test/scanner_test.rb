@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'fakefs/safe'
 
-class DeadlinkTest < Minitest::Test
+class ScannerTest < Minitest::Test
 
   def setup
     @target_dir = File.expand_path('files', File.dirname(__FILE__))
@@ -11,12 +11,6 @@ class DeadlinkTest < Minitest::Test
   def test_get_md_files
     files = @scanner.md_files
     assert_equal 11, files.count
-    assert files.include?(@target_dir + '/file1.md')
-    assert files.include?(@target_dir + '/file2.md')
-    assert files.include?(@target_dir + '/top.md')
-    assert files.include?(@target_dir + '/dir1/nest_file1.md')
-    assert files.include?(@target_dir + '/dir1/nest_file2.md')
-    assert files.include?(@target_dir + '/dir2/http.md')
   end
 
   def test_get_nest_md_files
@@ -25,8 +19,6 @@ class DeadlinkTest < Minitest::Test
 
     files = scanner.md_files
     assert_equal 2, files.count
-    assert files.include?(target_dir + '/nest_file1.md')
-    assert files.include?(target_dir + '/nest_file2.md')
   end
 
   def test_markdown_extension
@@ -72,7 +64,6 @@ class DeadlinkTest < Minitest::Test
       scanner = Deadlink::Scanner.new(target)
       refute scanner.valid?
     }
-
     
   end
   

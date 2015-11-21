@@ -19,18 +19,36 @@ module Deadlink
     end
 
     def md_files
+      files = []
       if File.directory?(@target_path)
-        Dir.glob(File.join(@target_path, '/**/*.{md,markdown}'))
+        Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
+          files.push(MdFile.new(file_path, @repo_root))
+        end
       else
         files = []
-        files.push(@target_path)
+        files.push(MdFile.new(@target_path, @repo_root))
       end
+      files
     end
 
+    # TODO : will remove method. move to MdFile Class
+    def headers(file)
+      headers = []
+      File.open(file) do |f|
+        f.each do |line|
+          if line =~ /^\#{1,6} +(?<header>.+)/ # capture sharp header part
+            headers.push Regexp.last_match[:header]
+          end
+        end
+      end
+      headers
+    end
+
+    # TODO : will remove method. move to MdFile Class
     def paths(files)
       paths = []
       files.each do |file|
-        File.open(file) do |f|
+        File.open(file.path) do |f|
           f.each_with_index do |line, index|
             line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
               paths.push Path.new(f.path, link[0], index + 1, @repo_root, nil)

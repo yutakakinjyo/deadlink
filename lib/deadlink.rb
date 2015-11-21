@@ -1,8 +1,10 @@
 require "deadlink/version"
 require 'deadlink/scanner'
+require 'deadlink/md_file'
 require 'deadlink/path'
 require 'deadlink/paths'
 require 'deadlink/decorator'
+
 require 'optparse'
 
 module Deadlink
