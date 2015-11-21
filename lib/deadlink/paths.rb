@@ -3,8 +3,9 @@ module Deadlink
 
     attr_reader :deadlinks
 
-    def initialize(paths)
+    def initialize(files, paths)
       @paths = paths
+      @files = files
       @deadlinks = paths.select { |path| path.deadlink? }
     end
 

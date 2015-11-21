@@ -1,7 +1,7 @@
 module Deadlink
   class Path
 
-    attr_reader :cur_file_path, :link, :index
+    attr_reader :cur_file_path, :link, :index, :anchor
 
     def initialize(cur_file_path, link, index, repo_root)
       @cur_file_path = cur_file_path
@@ -17,7 +17,7 @@ module Deadlink
     def deadlink?
       not_exist? && not_ignore?
     end
-
+    
     private
 
     def exist?
