@@ -31,23 +31,16 @@ module Deadlink
       files
     end
 
-    # TODO : will remove method. move to MdFile Class
     def paths(files)
       paths = []
       files.each do |file|
-        File.open(file.path) do |f|
-          f.each_with_index do |line, index|
-            line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
-              paths.push Path.new(f.path, link[0], index + 1, @repo_root, nil)
-            end
-          end
-        end
+        paths.concat(file.link_paths)
       end
-      Paths.new(paths)
+      Paths.new(files, paths)
     end
 
     private
-
+    
     def repo_root(target_path)
       dir = target_path
       until dir.empty? do

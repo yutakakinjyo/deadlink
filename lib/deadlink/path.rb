@@ -1,15 +1,13 @@
-# coding: utf-8
 module Deadlink
   class Path
 
-    attr_reader :cur_file_path, :link, :index
+    attr_reader :cur_file_path, :link, :index, :anchor
 
-    def initialize(cur_file_path, link, index, repo_root, axt_headers)
+    def initialize(cur_file_path, link, index, repo_root)
       @cur_file_path = cur_file_path
       @link = link
       @index = index
       @repo_root = repo_root
-      @axt_headers = axt_headers
       
       hash = split_link(link)
       @link_file_path = hash[:filepath]
@@ -19,15 +17,11 @@ module Deadlink
     def deadlink?
       not_exist? && not_ignore?
     end
-
+    
     private
 
     def exist?
-      FileTest.exist?(abusolute_link_file_path) || anchor_exist?
-    end
-
-    def anchor_exist?
-      
+      FileTest.exist?(abusolute_link_file_path)
     end
     
     def abusolute_link_file_path

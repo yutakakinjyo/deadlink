@@ -25,12 +25,5 @@ class PathTest < Minitest::Test
     paths = @scanner.paths(files)
     assert paths.deadlink_include?
   end
-
-  def test_check_exist
-     files = @scanner.md_files
-     paths = @scanner.paths(files)
-     assert paths.deadlink_include?
-  end
-
   
 end
