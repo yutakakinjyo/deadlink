@@ -9,8 +9,19 @@ module Deadlink
       @deadlinks = paths.select { |path| path.deadlink? }
     end
 
+    def deadlink_exist?
+      @paths.each do |path|
+        @files.each do |file|
+          if !path.anchor.empty?
+            return false if file.headers.include?(path.anchor)
+          end
+        end
+      end
+      return true
+    end
+    
     def deadlink_include?
-      @deadlinks.any?
+      @deadlinks.any? || deadlink_exist?
     end
 
     def print_deadlinks(opts)
