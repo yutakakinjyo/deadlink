@@ -15,14 +15,23 @@ module Deadlink
       @link_paths = []
       File.open(file_path) do |f|
         f.each_with_index do |line,index|
-          if line =~ /^\#{1,6} +(?<header>.+)/ # capture sharp header part
+          if line =~ heading_pattern # capture sharp header part
             @headers.push Regexp.last_match[:header]
           end
-          line.scan /\[[^\]]*\]\(([^)]+)\)/ do |link|
+          line.scan link_pattern do |link| # capthure link path part
             @link_paths.push Path.new(file_path, link[0], index + 1, repo_root)
           end
         end
       end
     end
+
+    def heading_pattern
+      /^\#{1,6} +(?<header>.+)/
+    end
+
+    def link_pattern
+      /\[[^\]]*\]\((?<link>[^)]+)\)/
+    end
+    
   end
 end
