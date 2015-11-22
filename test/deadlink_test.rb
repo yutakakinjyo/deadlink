@@ -2,13 +2,21 @@ require 'test_helper'
 require 'fakefs/safe'
 
 class DeadlinkTest < Minitest::Test
+
+  def setup
+    FakeFS.activate!
+  end
+
+  def teardown
+    FakeFS::FileSystem.clear
+    FakeFS.deactivate!
+  end
+  
   def test_that_it_has_a_version_number
     refute_nil ::Deadlink::VERSION
   end
 
-
   def test_current_argment
-    FakeFS.activate!
 
     FileUtils.mkdir_p 'git_repo/.git'
     FileUtils.mkdir_p 'git_repo/files'
@@ -24,50 +32,34 @@ class DeadlinkTest < Minitest::Test
 
     files = scanner.md_files
     assert_equal 2, files.count
-
-    FakeFS::FileSystem.clear
-    FakeFS.deactivate!
   end
 
   def test_non_option
-    assert_output("dummy in mdfile.md line: 1\n")  { 
 
-      FakeFS.activate!
-
-      FileUtils.mkdir_p 'git_repo/.git'
-      file_path = File.join('git_repo', 'mdfile.md')
-      File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
-      FileUtils.cd 'git_repo'
-
-      Deadlink.scan() 
-
-      FakeFS::FileSystem.clear
-      FakeFS.deactivate!
-    }
+    FileUtils.mkdir_p 'git_repo/.git'
+    file_path = File.join('git_repo', 'mdfile.md')
+    File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+    FileUtils.cd 'git_repo'
+    
+    assert_output("dummy in mdfile.md line: 1\n")  { Deadlink.scan()  }
   end
 
   def test_p_option
-    assert_output("+1 mdfile.md\n")  { 
 
-      FakeFS.activate!
+    FileUtils.mkdir_p 'git_repo/.git'
+    file_path = File.join('git_repo', 'mdfile.md')
+    File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
+    FileUtils.cd 'git_repo'
 
-      FileUtils.mkdir_p 'git_repo/.git'
-      file_path = File.join('git_repo', 'mdfile.md')
-      File.open(file_path, 'a') { |f| f.puts "[dummy](dummy)" }
-      FileUtils.cd 'git_repo'
+    target_dir = nil
+    opts = {'p' => true}
+    scanner = Deadlink::Scanner.new(target_dir)
+    files = scanner.md_files
+    paths = scanner.paths(files)
 
-      target_dir = nil
-      opts = {'p' => true}
-      scanner = Deadlink::Scanner.new(target_dir)
-      files = scanner.md_files
-      paths = scanner.paths(files)
-      paths.print_deadlinks(opts)
+    assert_output("+1 mdfile.md\n")  {  paths.print_deadlinks(opts)  }
 
-      FakeFS::FileSystem.clear
-      FakeFS.deactivate!
-    }
   end
-
 
 
 end

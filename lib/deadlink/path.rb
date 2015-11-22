@@ -17,6 +17,10 @@ module Deadlink
     def deadlink?
       not_exist? && not_ignore?
     end
+
+    def anchor_exit?
+      !anchor.empty?
+    end
     
     private
 

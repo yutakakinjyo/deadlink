@@ -32,11 +32,7 @@ module Deadlink
     end
 
     def paths(files)
-      paths = []
-      files.each do |file|
-        paths.concat(file.link_paths)
-      end
-      Paths.new(files, paths)
+      Paths.new(files)
     end
 
     private

@@ -3,16 +3,17 @@ module Deadlink
 
     attr_reader :deadlinks
 
-    def initialize(files, paths)
-      @paths = paths
+    def initialize(files)
       @files = files
-      @deadlinks = paths.select { |path| path.deadlink? }
+      @paths = []
+      @files.each { |file| @paths.concat(file.link_paths) }
+      @deadlinks = @paths.select { |path| path.deadlink? }
     end
 
-    def deadlink_exist?
+    def anchor_not_exist?
       @paths.each do |path|
         @files.each do |file|
-          if !path.anchor.empty?
+          if path.anchor_exit?
             return false if file.headers.include?(path.anchor)
           end
         end
@@ -21,7 +22,7 @@ module Deadlink
     end
     
     def deadlink_include?
-      @deadlinks.any? || deadlink_exist?
+      @deadlinks.any? || anchor_not_exist?
     end
 
     def print_deadlinks(opts)
