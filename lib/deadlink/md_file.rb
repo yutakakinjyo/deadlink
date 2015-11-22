@@ -7,7 +7,7 @@ module Deadlink
       @path = file_path
       init(file_path, repo_root)
     end
-
+    
     private
     
     def init(file_path, repo_root)
@@ -18,7 +18,7 @@ module Deadlink
           if line =~ heading_pattern # capture sharp header part
             @headers.push Regexp.last_match[:header]
           end
-          line.scan link_pattern do |link| # capthure link path part
+          line.scan link_pattern do |link| # capthure links path part
             @link_paths.push Path.new(file_path, link[0], index + 1, repo_root)
           end
         end
