@@ -17,8 +17,9 @@ module Deadlink
         f.each_with_index do |line,index|
           if line =~ heading_pattern # capture sharp header part
             @headers.push Regexp.last_match[:header]
-          elsif line =~ link_pattern # capthure link path part
-            @link_paths.push Path.new(file_path, Regexp.last_match[:link], index + 1, repo_root)
+          end
+          line.scan link_pattern do |link| # capthure link path part
+            @link_paths.push Path.new(file_path, link[0], index + 1, repo_root)
           end
         end
       end

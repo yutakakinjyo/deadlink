@@ -117,5 +117,17 @@ class MdFileTest < Minitest::Test
     assert_equal 1, files[0].headers.count
     assert_equal 2, files[1].headers.count
   end
+
+  def test_one_sentence_links
+    File.open('mdfils.md', 'a') do |f|
+      f.puts "# [dummy](link1) [dummy](link2)"
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    assert_equal 1, files[0].headers.count
+    assert_equal 2, files[0].link_paths.count
+
+  end
   
 end
