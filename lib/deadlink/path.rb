@@ -12,20 +12,34 @@ module Deadlink
       hash = split_link(link)
       @link_file_path = hash[:filepath]
       @anchor = hash[:anchor]
+
+      @abusolute_link_file_path = abusolute_link_file_path
     end
 
-    def deadlink?
-      not_exist? && not_ignore?
-    end
-
-    def anchor_exit?
-      !anchor.empty?
+    def deadlink?(files)
+      (not_exist? || anchor_invalid?(files)) && not_ignore?
     end
     
     private
 
+    def anchor_invalid?(files)
+      return false if @anchor.empty?
+      files.each do |file|
+        if @link_file_path.empty?
+          files.each do |file|
+            if file.path == @cur_file_path
+              return false if file.headers.include?(@anchor)
+            end
+          end
+        elsif file.path ==  @abusolute_link_file_path
+          return false if file.headers.include?(@anchor)
+        end
+      end
+      true
+    end
+
     def exist?
-      FileTest.exist?(abusolute_link_file_path)
+      FileTest.exist?(@abusolute_link_file_path)
     end
     
     def abusolute_link_file_path
