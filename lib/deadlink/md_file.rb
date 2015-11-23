@@ -5,23 +5,27 @@ module Deadlink
     
     def initialize(file_path, repo_root)
       @path = file_path
-      init(file_path, repo_root)
+      init(repo_root)
     end
     
     private
     
-    def init(file_path, repo_root)
+    def init(repo_root)
       @headers = []
       @link_paths = []
-      File.open(file_path) do |f|
+      File.open(@path) do |f|
         f.each_with_index do |line,index|
-          if line =~ heading_pattern # capture sharp header part
-            @headers.push Regexp.last_match[:header]
-          end
-          line.scan link_pattern do |link| # capthure links path part
-            @link_paths.push Path.new(file_path, link[0], index + 1, repo_root)
-          end
+          attribute(line, index, repo_root)
         end
+      end
+    end
+
+    def attribute(line, index, repo_root)
+      if line =~ heading_pattern # capture sharp header part
+        @headers.push Regexp.last_match[:header]
+      end
+      line.scan link_pattern do |link| # capthure links path part
+        @link_paths.push Path.new(@path, link[0], index + 1, repo_root)
       end
     end
 
