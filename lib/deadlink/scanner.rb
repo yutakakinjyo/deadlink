@@ -28,7 +28,7 @@ module Deadlink
         files = []
         files.push(MdFile.new(@target_path, @repo_root))
       end
-      files
+      MdFiles.new(files)
     end
 
     def paths(files)
