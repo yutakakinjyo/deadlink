@@ -15,17 +15,16 @@ module Deadlink
         puts @target_path + ": No such file or directory"
         return false
       end
-      return true
+      true
     end
 
     def md_files
       files = []
       if File.directory?(@target_path)
-        Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
+        glob do |file_path| 
           files.push(MdFile.new(file_path, @repo_root))
         end
       else
-        files = []
         files.push(MdFile.new(@target_path, @repo_root))
       end
       MdFiles.new(files)
@@ -36,6 +35,12 @@ module Deadlink
     end
 
     private
+
+    def glob
+      Dir.glob(File.join(@target_path, '/**/*.{md,markdown}')) do |file_path|
+        yield file_path
+      end
+    end
     
     def repo_root(target_path)
       dir = target_path
