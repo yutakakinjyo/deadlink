@@ -25,12 +25,12 @@ module Deadlink
     def anchor_invalid?(files)
       return false if @anchor.empty?
       if @link_file_path.empty?
-        return header_include?(files, @cur_file_path)
+        return header_not_include?(files, @cur_file_path)
       end
-      header_include?(files, @abusolute_link_file_path)
+      header_not_include?(files, @abusolute_link_file_path)
     end
 
-    def header_include?(files, path)
+    def header_not_include?(files, path)
       file = find(files, path)
       unless file.nil?
         return false if file.headers.include?(@anchor)
