@@ -26,10 +26,9 @@ module Deadlink
       return false if @anchor.empty?
       files.each do |file|
         if @link_file_path.empty?
-          files.each do |file|
-            if file.path == @cur_file_path
-              return false if file.headers.include?(@anchor)
-            end
+          target_file =  files.index { |file| file.path == @cur_file_path }
+          if !target_file.nil?
+            return false if file.headers.include?(@anchor)
           end
         elsif file.path ==  @abusolute_link_file_path
           return false if file.headers.include?(@anchor)
