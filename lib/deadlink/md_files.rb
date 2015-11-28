@@ -21,6 +21,7 @@ module Deadlink
 
     def find_by(path)
       @files.each { |file| return file if file.path == path }
+      nil
     end
     
   end
