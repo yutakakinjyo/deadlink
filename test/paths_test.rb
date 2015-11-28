@@ -104,8 +104,6 @@ class PathsTest < Minitest::Test
     files = scanner.md_files
     paths = scanner.paths(files)
     assert_equal 0, paths.deadlinks.count
-    refute paths.deadlink_include?
-
   end
   
 end
