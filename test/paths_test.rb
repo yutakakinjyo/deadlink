@@ -90,8 +90,14 @@ class PathsTest < Minitest::Test
     File.open('git_repo/file1.md', 'a') do |f|
       f.puts "[dummy](#headerone)"
       f.puts "[dummy](#header-two)"
+      f.puts "[dummy](#header-three)"
+      f.puts "[dummy](#header-four)"
+      f.puts "[dummy](#header-five-six)"
       f.puts "# HeaderOne"
       f.puts "# Header Two"
+      f.puts "# Header Three  "
+      f.puts "# Header  Four"
+      f.puts "# Header  Five   Six  "
     end
 
     scanner = Deadlink::Scanner.new('git_repo')

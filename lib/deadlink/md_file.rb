@@ -22,7 +22,8 @@ module Deadlink
 
     def attribute(line, index, repo_root)
       if line =~ heading_pattern # capture sharp header part
-        @headers.push Regexp.last_match[:header].downcase
+        header = Regexp.last_match[:header].downcase.rstrip.gsub(/\s+/," ")
+        @headers.push header.gsub(" ", "-")
       end
       line.scan link_pattern do |link| # capthure links path part
         @link_paths.push Path.new(@path, link[0], index + 1, repo_root)
