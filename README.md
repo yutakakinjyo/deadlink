@@ -29,7 +29,6 @@ $ deadlink deadlink/
 result is this
 
 ```
-example.md#title1 in ./README.md line: 43
 contributor-covenant.org in ./README.md line: 73
 nothing_file3.md in ./test/files/dir1/nest_file1.md line: 2
 dir1/nothing_nest_file2.md in ./test/files/top.md line: 3
@@ -42,8 +41,6 @@ nothing.txt in ./test/files/top.md line: 8
 this gem not check following patterns yet. applying these patterns to gem is future task.
 
 - http(s) link
-- anchor link ( only check file path part )
-  - e.g. `[anhor link](example.md#title1)` => check example.md 
 - multibyte characters
 
 ## Installation
