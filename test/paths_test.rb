@@ -85,5 +85,25 @@ class PathsTest < Minitest::Test
     refute paths.deadlink_include?
   end
 
+  def test_normalize_anchor
+
+    File.open('git_repo/file1.md', 'a') do |f|
+      f.puts "[dummy](#headerone)"
+      f.puts "[dummy](#header-two)"
+      f.puts "[dummy](#header-three)"
+      f.puts "[dummy](#header-four)"
+      f.puts "[dummy](#header-five-six)"
+      f.puts "# HeaderOne"
+      f.puts "# Header Two"
+      f.puts "# Header Three  "
+      f.puts "# Header  Four"
+      f.puts "# Header  Five   Six  "
+    end
+
+    scanner = Deadlink::Scanner.new('git_repo')
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
   
 end
