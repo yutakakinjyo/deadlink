@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'test_helper'
 require 'fakefs/safe'
 
@@ -85,6 +86,21 @@ class PathsTest < Minitest::Test
     refute paths.deadlink_include?
   end
 
+  def test_2level_anchpr
+
+    File.open('git_repo/teaching_guide.md', 'a') do |f|
+      f.puts "- [カリキュラムの準備](teaching_guide.md#カリキュラムの準備)"
+      f.puts "## カリキュラムの準備"
+    end
+
+    scanner = Deadlink::Scanner.new('git_repo')
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    refute paths.deadlink_include?
+  end
+
+
+
   def test_normalize_anchor
 
     File.open('git_repo/file1.md', 'a') do |f|
@@ -131,5 +147,6 @@ class PathsTest < Minitest::Test
     paths = scanner.paths(files)
     assert_equal 0, paths.deadlinks.count
   end
+
   
 end
