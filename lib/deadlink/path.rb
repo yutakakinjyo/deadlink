@@ -44,7 +44,7 @@ module Deadlink
 
     def split_link(link)
       # split <filenpath>#<anchor>
-      link.match(/(?<filepath>[^#]*)#*(?<anchor>.*)/)
+      link.match(/(?<filepath>[^#?]*)#*(?<anchor>[[^?][.]]*)/)
     end
 
     def specify_root?(path)

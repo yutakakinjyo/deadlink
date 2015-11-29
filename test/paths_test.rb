@@ -105,5 +105,31 @@ class PathsTest < Minitest::Test
     paths = scanner.paths(files)
     assert_equal 0, paths.deadlinks.count
   end
+
+  def test_image_link
+
+    File.open('git_repo/image.png', 'a')
+    File.open('git_repo/file1.md', 'a') do |f|
+      f.puts "![dummy](image.png)"
+    end
+    
+    scanner = Deadlink::Scanner.new('git_repo')
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
+
+  def test_image_query_link
+
+    File.open('git_repo/image.png', 'a')
+    File.open('git_repo/file1.md', 'a') do |f|
+      f.puts "![dummy](image.png?raw=true)"
+    end
+    
+    scanner = Deadlink::Scanner.new('git_repo')
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
   
 end
