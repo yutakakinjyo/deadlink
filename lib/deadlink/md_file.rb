@@ -26,7 +26,7 @@ module Deadlink
         @headers.push header.gsub(" ", "-")
       end
       line.scan link_pattern do |link| # capthure links path part
-        @link_paths.push Path.new(@path, link[0], index + 1, repo_root)
+        @link_paths.push Path.new(@path, link[0].rstrip, index + 1, repo_root)
       end
     end
 
