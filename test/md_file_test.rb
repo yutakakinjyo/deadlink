@@ -4,9 +4,9 @@ require 'fakefs/safe'
 class MdFileTest < Minitest::Test
   
   def setup
+    FakeFS.activate!
     FileUtils.mkdir_p 'git_repo/.git'
     FileUtils.cd 'git_repo'
-    FakeFS.activate!
   end
 
   def teardown
