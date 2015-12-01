@@ -14,8 +14,16 @@ module Deadlink
     
     def init(repo_root)
       File.open(@path) do |f|
+        prev_line = nil
         f.each_with_index do |line,index|
           attribute(line, index, repo_root)
+          if line =~ /^[-]+$|^[=]+$/
+            unless prev_line.nil?
+              if prev_line =~ /^[-]+$|^[=]+$/
+              end
+            end
+          end
+          prev_line = line
         end
       end
     end
