@@ -129,5 +129,18 @@ class MdFileTest < Minitest::Test
     assert_equal 2, files[0].link_paths.count
 
   end
+
+  def test_under_header
+    File.open('mdfils.md', 'a') do |f|
+      f.puts "# [dummy](file1.md#header)"
+      f.puts "header"
+      f.puts "----"
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
   
 end
