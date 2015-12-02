@@ -19,8 +19,7 @@ module Deadlink
           attribute(line, index, repo_root)
           if line =~ /^[-]+$|^[=]+$/
             unless prev_line.nil?
-              if prev_line =~ /^[-]+$|^[=]+$/
-              end
+              @headers.push prev_line.chomp
             end
           end
           prev_line = line
