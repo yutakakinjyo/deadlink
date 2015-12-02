@@ -131,8 +131,8 @@ class MdFileTest < Minitest::Test
   end
 
   def test_under_header
-    File.open('mdfils.md', 'a') do |f|
-      f.puts "# [dummy](file1.md#header)"
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](file1.md#header)"
       f.puts "header"
       f.puts "----"
     end
