@@ -1,3 +1,4 @@
+# coding: utf-8
 module Deadlink
   class Path
 
@@ -24,7 +25,7 @@ module Deadlink
 
     def anchor_invalid?(files)
       return false if @anchor.empty?
-      if @link_file_path.empty?
+      if @link_file_path.empty? # only anchor case  e.g [](#anchor)
         return !files.header_include?(@cur_file_path, @anchor)
       end
       !files.header_include?(@abusolute_link_file_path, @anchor)
