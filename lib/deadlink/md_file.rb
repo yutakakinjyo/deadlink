@@ -17,25 +17,22 @@ module Deadlink
         prev_line = nil
         f.each_with_index do |line,index|
           sharp_header(line) { |header| @headers.push header }
+          under_line_header(line, prev_line) { |header| @headers.push header }; prev_line = line
           link(line, index, repo_root) { |path| @link_paths.push path }
-          under_line_header(line, prev_line) { |header| @headers.push header }
-          prev_line = line
         end
       end
     end
 
     def sharp_header(line)
-      if line =~ heading_pattern # capture sharp header part
+      if line =~ sharp_header_pattern # capture sharp header part
         header = Regexp.last_match[:header].downcase.rstrip.gsub(/\s+/," ")
         yield header.gsub(" ", "-")
       end
     end
     
     def under_line_header(line, prev_line)
-      if line =~ /^[-]+$|^[=]+$/
-        unless prev_line.nil?
-          yield prev_line.chomp
-        end
+      if line =~ under_header_pattern && !prev_line.nil?
+        yield prev_line.chomp
       end
     end
 
@@ -45,10 +42,14 @@ module Deadlink
       end
     end
 
-    def heading_pattern
+    def sharp_header_pattern
       /^\#{1,6} +(?<header>.+)/
     end
 
+    def under_header_pattern
+      /^[-]+$|^[=]+$/
+    end
+    
     def link_pattern
       /\[[^\]]*\]\((?<link>[^)]+)\)/
     end
