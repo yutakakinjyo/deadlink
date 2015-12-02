@@ -142,5 +142,75 @@ class MdFileTest < Minitest::Test
     paths = scanner.paths(files)
     assert_equal 0, paths.deadlinks.count
   end
+
+  def test_under_two_header
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](file1.md#header)"
+      f.puts "header"
+      f.puts "----"
+      f.puts "----"
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
+
+  def test_under_header_next_line
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](file1.md#header)"
+      f.puts "header"
+      f.puts ""
+      f.puts "----"
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 1, paths.deadlinks.count
+  end
+
+  def test_mix_plus_under_header
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](file1.md#header)"
+      f.puts "header"
+      f.puts ""
+      f.puts "----+"
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 1, paths.deadlinks.count
+  end
+
+  def test_mix_equal_under_header
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](file1.md#header)"
+      f.puts "header"
+      f.puts ""
+      f.puts "----="
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 1, paths.deadlinks.count
+  end
+
+
+  def test_under_equal_header
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](file1.md#header)"
+      f.puts "header"
+      f.puts "===="
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
   
 end
