@@ -20,7 +20,7 @@ module Deadlink
     private
 
     def find_by(path)
-      @files.each { |file| return file if File.expand_path(file.path, File.dirname(file.path)) == path }
+      @files.each { |file| return file if File.expand_path(file.path, File.dirname(file.path)) == File.expand_path(path, File.dirname(path)) }
       nil
     end
     
