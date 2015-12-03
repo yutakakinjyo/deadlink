@@ -11,17 +11,15 @@ module Deadlink
       @files = files
     end
     
-    def header_include?(path, anchor)
-      file = find_by(path)
-      return file.headers.include?(anchor) unless file.nil?
-      false
+    def find_by(path)
+      @files.each { |file| return file if  abs(file.path) == abs(path) }
+      nil
     end
     
     private
 
-    def find_by(path)
-      @files.each { |file| return file if File.expand_path(file.path, File.dirname(file.path)) == File.expand_path(path, File.dirname(path)) }
-      nil
+    def abs(path)
+      File.expand_path(path, File.dirname(path))
     end
     
   end

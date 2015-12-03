@@ -11,10 +11,11 @@ module Deadlink
       @repo_root = repo_root
       
       hash = split_link(link)
-      @link_file_path = hash[:filepath]
       @anchor = hash[:anchor]
+      @link_file_path = hash[:filepath]
 
-      @abusolute_link_file_path = abusolute_link_file_path
+
+      @abs_link_file_path = abs_link_file_path
     end
 
     def deadlink?(files)
@@ -25,17 +26,23 @@ module Deadlink
 
     def anchor_invalid?(files)
       return false if @anchor.empty?
-      if @link_file_path.empty? # only anchor case  e.g [](#anchor)
-        return !files.header_include?(@cur_file_path, @anchor)
-      end
-      !files.header_include?(@abusolute_link_file_path, @anchor)
+
+      # e.g [](#anchor)
+      path =  only_anchor? ? @cur_file_path : @abs_link_file_path
+      file = files.find_by(path)
+      return !file.headers.include?(@anchor)
+    end
+
+    def only_anchor?
+      @link_file_path.empty? && !@anchor.empty? 
     end
     
     def exist?
-      FileTest.exist?(@abusolute_link_file_path)
+      FileTest.exist?(@abs_link_file_path)
     end
     
-    def abusolute_link_file_path
+    def abs_link_file_path
+      
       if specify_root?(@link_file_path)
         return File.join(@repo_root, @link_file_path)
       else
