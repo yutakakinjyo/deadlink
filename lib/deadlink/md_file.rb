@@ -25,7 +25,7 @@ module Deadlink
 
     def sharp_header(line)
       if line =~ sharp_header_pattern # capture sharp header part
-        header = Regexp.last_match[:header].downcase.rstrip.gsub(/\s+/," ")
+        header = Regexp.last_match[:header].downcase.rstrip
         yield header.gsub(" ", "-")
       end
     end
