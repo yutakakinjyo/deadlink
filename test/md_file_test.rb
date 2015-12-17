@@ -190,7 +190,6 @@ class MdFileTest < Minitest::Test
     File.open('file1.md', 'a') do |f|
       f.puts "[dummy](file1.md#header)"
       f.puts "header"
-      f.puts ""
       f.puts "----+"
     end
 
@@ -204,7 +203,6 @@ class MdFileTest < Minitest::Test
     File.open('file1.md', 'a') do |f|
       f.puts "[dummy](file1.md#header)"
       f.puts "header"
-      f.puts ""
       f.puts "----="
     end
 
