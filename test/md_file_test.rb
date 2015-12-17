@@ -130,6 +130,21 @@ class MdFileTest < Minitest::Test
 
   end
 
+  def test_under_header_anchor_only
+
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](#header)"
+      f.puts "header"
+      f.puts "----"
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
+
+
   def test_under_header
     File.open('file1.md', 'a') do |f|
       f.puts "[dummy](file1.md#header)"
@@ -175,7 +190,6 @@ class MdFileTest < Minitest::Test
     File.open('file1.md', 'a') do |f|
       f.puts "[dummy](file1.md#header)"
       f.puts "header"
-      f.puts ""
       f.puts "----+"
     end
 
@@ -189,7 +203,6 @@ class MdFileTest < Minitest::Test
     File.open('file1.md', 'a') do |f|
       f.puts "[dummy](file1.md#header)"
       f.puts "header"
-      f.puts ""
       f.puts "----="
     end
 
@@ -218,6 +231,20 @@ class MdFileTest < Minitest::Test
       f.puts "[dummy](#header)"
       f.puts "header"
       f.puts "===="
+    end
+
+    scanner = Deadlink::Scanner.new(nil)
+    files = scanner.md_files
+    paths = scanner.paths(files)
+    assert_equal 0, paths.deadlinks.count
+  end
+
+  def test_space_under_anchor
+
+    File.open('file1.md', 'a') do |f|
+      f.puts "[dummy](#header-header)"
+      f.puts "Header header"
+      f.puts "-----"
     end
 
     scanner = Deadlink::Scanner.new(nil)
