@@ -16,8 +16,8 @@ module Deadlink
       File.open(@path) do |f|
         prev_line = nil
         f.each_with_index do |line,index|
-          sharp_header(line) { |header| @headers.push header }
-          under_line_header(line, prev_line) { |header| @headers.push header }; prev_line = line
+          sharp_header(line) { |header| @headers.push normalize header }
+          under_line_header(line, prev_line) { |header| @headers.push normalize header }; prev_line = line
           link(line, index, repo_root) { |path| @link_paths.push path }
         end
       end
@@ -25,15 +25,19 @@ module Deadlink
 
     def sharp_header(line)
       if line =~ sharp_header_pattern # capture sharp header part
-        header = Regexp.last_match[:header].downcase.rstrip
-        yield header.gsub(" ", "-")
+        header = Regexp.last_match[:header]
+        yield header
       end
     end
     
     def under_line_header(line, prev_line)
       if line =~ under_header_pattern && !prev_line.nil?
-        yield prev_line.chomp.downcase.gsub(" ", "-")
+        yield prev_line # prev_line is header.
       end
+    end
+
+    def normalize(header)
+      return header.downcase.rstrip.chomp.gsub(" ", "-")
     end
 
     def link(line, index, repo_root)
