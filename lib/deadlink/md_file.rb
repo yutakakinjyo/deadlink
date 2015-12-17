@@ -32,7 +32,7 @@ module Deadlink
     
     def under_line_header(line, prev_line)
       if line =~ under_header_pattern && !prev_line.nil?
-        yield prev_line.chomp
+        yield prev_line.chomp.downcase.gsub(" ", "-")
       end
     end
 
