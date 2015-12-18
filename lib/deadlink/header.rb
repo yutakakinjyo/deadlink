@@ -9,8 +9,8 @@ module Deadlink
       return self.normalize(header)
     end
     
-    def self.header?(text, next_line=nil)
-      sharp_header?(text) || under_line_header?(next_line)
+    def self.header?(text, prev_line=nil)
+      sharp_header?(text) || under_line_header?(prev_line)
     end
 
     private
@@ -23,8 +23,8 @@ module Deadlink
       text =~ SHARP_HEADER_PATTERN
     end
 
-    def self.under_line_header?(next_line)
-      next_line =~ UNDER_HEADER_PATTERN && !next_line.nil?
+    def self.under_line_header?(prev_line)
+      prev_line =~ UNDER_HEADER_PATTERN && !prev_line.nil?
     end
 
   end
