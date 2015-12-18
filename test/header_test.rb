@@ -22,6 +22,11 @@ class HeaderTest < Minitest::Test
     refute Deadlink::Header::header?("header", "=====+")
   end
 
+    def test_not_under_line_header_empty
+    refute Deadlink::Header::header?("header", "")
+  end
+
+
   def test_whitespace_header
     header = Deadlink::Header.header("header ")
     assert_equal "header", header
