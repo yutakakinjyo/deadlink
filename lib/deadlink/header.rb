@@ -10,8 +10,7 @@ module Deadlink
     end
     
     def self.header?(text, next_line=nil)
-      return true if sharp_header?(text)
-      next_line =~ UNDER_HEADER_PATTERN && !next_line.nil?
+      sharp_header?(text) || under_line_header?(next_line)
     end
 
     private
@@ -22,6 +21,10 @@ module Deadlink
 
     def self.sharp_header?(text)
       text =~ SHARP_HEADER_PATTERN
+    end
+
+    def self.under_line_header?(next_line)
+      next_line =~ UNDER_HEADER_PATTERN && !next_line.nil?
     end
 
   end
