@@ -6,7 +6,7 @@ module Deadlink
     end
 
     def self.header?(text)
-      true
+      text =~ sharp_header_pattern
     end
     
     def sharp_header(line)
@@ -28,7 +28,7 @@ module Deadlink
 
     private
     
-    def sharp_header_pattern
+    def self.sharp_header_pattern
       /^\#{1,6} +(?<header>.+)/
     end
 
