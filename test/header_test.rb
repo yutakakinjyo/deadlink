@@ -15,7 +15,7 @@ class HeaderTest < Minitest::Test
   end
 
   def test_under_line_header_equal
-    assert Deadlink::Header::header?("header", "-----")
+    assert Deadlink::Header::header?("header", "======")
   end
 
 
