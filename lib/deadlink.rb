@@ -5,6 +5,7 @@ require 'deadlink/path'
 require 'deadlink/paths'
 require 'deadlink/decorator'
 require 'deadlink/md_files.rb'
+require 'deadlink/header.rb'
 
 
 require 'optparse'
