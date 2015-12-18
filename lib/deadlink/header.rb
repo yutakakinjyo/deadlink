@@ -5,8 +5,9 @@ module Deadlink
       @name = name
     end
 
-    def self.header?(text)
-      text =~ sharp_header_pattern
+    def self.header?(text, next_line=nil)
+      return true if text =~ sharp_header_pattern
+      next_line =~ under_header_pattern && !next_line.nil?
     end
     
     def sharp_header(line)
@@ -32,7 +33,7 @@ module Deadlink
       /^\#{1,6} +(?<header>.+)/
     end
 
-    def under_header_pattern
+    def self.under_header_pattern
       /^[-]+$|^[=]+$/
     end
 
