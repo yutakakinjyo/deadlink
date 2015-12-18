@@ -18,7 +18,19 @@ class HeaderTest < Minitest::Test
     assert Deadlink::Header::header?("header", "======")
   end
 
-    def test_not_under_line_header_equal
-      refute Deadlink::Header::header?("header", "=====+")
-    end
+  def test_not_under_line_header_equal
+    refute Deadlink::Header::header?("header", "=====+")
+  end
+
+  def test_whitespace_header
+    header = Deadlink::Header.header("header ")
+    assert_equal "header", header
+  end
+
+  def test_hyphen_header
+    header = Deadlink::Header.header("Header header")
+    assert_equal "header-header", header
+  end  
+
+
 end

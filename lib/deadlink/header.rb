@@ -1,42 +1,28 @@
 module Deadlink
   class Header
 
-    def initialize(name)
-      @name = name
-    end
+    SHARP_HEADER_PATTERN = /^\#{1,6} +(?<header>.+)/
+    UNDER_HEADER_PATTERN = /^[-]+$|^[=]+$/
 
+    def self.header(text)
+      header = sharp_header?(text) ? Regexp.last_match[:header] : text
+      return self.normalize(header)
+    end
+    
     def self.header?(text, next_line=nil)
-      return true if text =~ sharp_header_pattern
-      next_line =~ under_header_pattern && !next_line.nil?
-    end
-    
-    def sharp_header(line)
-      if line =~ sharp_header_pattern # capture sharp header part
-        header = Regexp.last_match[:header]
-        yield header
-      end
-    end
-    
-    def under_line_header(line, prev_line)
-      if line =~ under_header_pattern && !prev_line.nil?
-        yield prev_line # prev_line is header.
-      end
-    end
-
-    def normalize(header)
-      return header.downcase.rstrip.chomp.gsub(" ", "-")
+      return true if sharp_header?(text)
+      next_line =~ UNDER_HEADER_PATTERN && !next_line.nil?
     end
 
     private
     
-    def self.sharp_header_pattern
-      /^\#{1,6} +(?<header>.+)/
+    def self.normalize(header)
+      return header.downcase.rstrip.chomp.gsub(" ", "-")
     end
 
-    def self.under_header_pattern
-      /^[-]+$|^[=]+$/
+    def self.sharp_header?(text)
+      text =~ SHARP_HEADER_PATTERN
     end
-
 
   end
 end
