@@ -22,7 +22,7 @@ class HeaderTest < Minitest::Test
     refute Deadlink::Header::header?("header", "=====+")
   end
 
-    def test_not_under_line_header_empty
+  def test_not_under_line_header_empty
     refute Deadlink::Header::header?("header", "")
   end
 
