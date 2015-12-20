@@ -41,7 +41,6 @@ nothing.txt in ./test/files/top.md line: 8
 this gem not check following patterns yet. applying these patterns to gem is future task.
 
 - http(s) link
-- multibyte characters
 
 ## Installation
 
