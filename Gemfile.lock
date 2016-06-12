@@ -1,0 +1,33 @@
+PATH
+  remote: .
+  specs:
+    deadlink (0.6.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ansi (1.5.0)
+    builder (3.2.2)
+    fakefs (0.6.7)
+    minitest (5.8.3)
+    minitest-reporters (1.1.5)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
+    rake (10.4.2)
+    ruby-progressbar (1.7.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.11.0)
+  deadlink!
+  fakefs
+  minitest
+  minitest-reporters
+  rake (~> 10.0)
+
+BUNDLED WITH
+   1.11.0
